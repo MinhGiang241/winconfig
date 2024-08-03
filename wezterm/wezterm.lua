@@ -2,14 +2,18 @@ local wezterm = require 'wezterm';
 local config = wezterm.config_builder()
 
 -- Đặt font chữ và color scheme nếu cần
-config.font = wezterm.font 'IosevkaTerm NF'
+-- config.font = wezterm.font 'IosevkaTerm NF'
 config.font_size = 11.6
 -- config.color_scheme = "TokyoNight"
 
+-- Tránh giật khi kéo màn hình
+-- config.window_decorations = 'RESIZE'
+
 config.color_scheme = 'MaterialDesignColors'
 
+
 -- Đặt PowerShell làm shell mặc định
-config.default_prog = {"C:\\Program Files\\WindowsApps\\Microsoft.PowerShell_7.4.3.0_x64__8wekyb3d8bbwe\\pwsh.exe"}
+config.default_prog = {"C:/Program Files/WindowsApps/Microsoft.PowerShell_7.4.4.0_x64__8wekyb3d8bbwe/pwsh.exe"}
 
 config.window_background_opacity = 0.85
 -- config.window_background_gradient = {
