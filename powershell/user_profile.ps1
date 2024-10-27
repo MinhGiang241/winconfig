@@ -1,6 +1,6 @@
 # Promp
 Import-Module posh-git
-oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\montys.omp" | Invoke-Expression
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\jandedobbeleer.omp.json" | Invoke-Expression
 
 # Load prompt config
 # function Get-ScriptDirection { Split-Path $MyInvocation.ScriptName}
