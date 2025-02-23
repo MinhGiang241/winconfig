@@ -2,17 +2,39 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 -- Đặt font chữ và color scheme nếu cần
--- config.font = wezterm.font 'IosevkaTerm NF'
+config.font = wezterm.font("Iosevka Nerd Font")
 config.font_size = 11.6
 -- config.color_scheme = "TokyoNight"
 
 -- Tránh giật khi kéo màn hình
 -- config.window_decorations = 'RESIZE'
 
-config.color_scheme = "MaterialDesignColors"
+-- Hình nền
+math.randomseed(os.time()) -- Khởi tạo bộ sinh số ngẫu nhiên (chỉ cần gọi 1 lần)
+local random_number = math.random(1, 3)
+local path = string.format("C:\\Users\\Admin\\.config\\wezterm\\bg\\%s.jpg", random_number)
 
+config.background = {
+	{
+		source = {
+			File = path,
+		},
+		opacity = 1,
+		hsb = {
+			brightness = 0.07, -- Giảm độ sáng
+		},
+	},
+	-- {
+	-- 	source = {
+	-- 		Color = "#000000", -- Lớp màu đen phủ bên trên
+	-- 	},
+	-- 	opacity = 0.8,
+	-- },
+}
+
+config.color_scheme = "MaterialDesignColors"
 -- Đặt PowerShell làm shell mặc định
-config.default_prog = { "C:/Program Files/WindowsApps/Microsoft.PowerShell_7.4.6.0_x64__8wekyb3d8bbwe/pwsh.exe" }
+config.default_prog = { "C:/Program Files/WindowsApps/Microsoft.PowerShell_7.5.0.0_x64__8wekyb3d8bbwe/pwsh.exe" }
 
 config.window_background_opacity = 0.85
 -- config.window_background_gradient = {
