@@ -1,6 +1,6 @@
 # Promp
 Import-Module posh-git
-oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\jandedobbeleer.omp.json" | Invoke-Expression
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\montys.omp.json" | Invoke-Expression
 
 # Load prompt config
 # function Get-ScriptDirection { Split-Path $MyInvocation.ScriptName}
@@ -204,11 +204,11 @@ function Start-Esms-BatchJob
       continue
     }
 
-    Write-Host "[START] $($p.Title)"
-    set-Location (Split-Path $p.Project)
+    Write-Host "[START] $($p.Title)" 
+    $projectDir = Split-Path $p.Project
     wt -w $Window `
       --title $p.Title `
-      pwsh -NoExit -Command "dotnet run --project '$($p.Project)' --launch-profile '$($p.Profile)'"  
+      pwsh -NoExit -Command "Set-Location '$projectDir' && dotnet run --project '$($p.Project)' --launch-profile '$($p.Profile)'"  
   }
 
 }
@@ -222,7 +222,7 @@ function Start-Esms-JobWeb
   set-Location "$HOME\Code\sms\Customization\dbp\BatchJob\BatchJob.Web\Spa"
   wt -w $Window `
     --title "BatchJob Web" `
-    pwsh -NoExit -Command "npm run dev"
+    pwsh -NoExit -Command "set-Location '$HOME\Code\sms\Customization\dbp\BatchJob\BatchJob.Web\Spa' && npm run dev"
 }
 
 function Start-Esms-job
@@ -271,4 +271,46 @@ function Stop-Esms-Api
       Write-Host "Stopping $($_.ProcessName) (PID: $($_.Id))"
       Stop-Process -Id $_.Id -Force
     }
+}
+
+function Set-esms-token 
+{
+  param([string]$Text)
+  $fileDir = "$HOME\Code\sms\Customization\CustomizedServices\CustomizedForTP\LowcodeService.API\Services\Report\DbpJobExecutionService.cs"
+  $lines = Get-Content $fileDir
+  $lines[77] = "                cookieContainer.Add(new Uri(RuntimeContext.Config.DbpClient.Endpoint), new Cookie(`"mars_access_token`",`"$Text`"));"
+  $lines | Set-Content $fileDir -Encoding utf8
+  Write-Host ("Token was Set successfully")
+}
+
+function Set-esms-cookie
+{
+  param([string]$Text)
+  $fileDir = "$HOME\Code\sms\Customization\dbp\BatchJob\BatchJob.Report.Common\Extensions\ServiceExtension.cs"
+  $lines = Get-Content $fileDir
+  $lines[89] = "            cookieContainer.Add(new Uri(baseAddress), new Cookie(`"Cookies`",`"$Text`"));"
+  $lines | Set-Content $fileDir -Encoding utf8
+  Write-Host ("Cookie was Set successfully")
+}
+
+
+# Chạy LazyVim bằng lệnh 'lazyvim'
+function lazyvim
+{
+  $env:NVIM_APPNAME = "nvim"
+  nvim $args
+}
+
+# Chạy NvChad bằng lệnh 'nvchad'
+function nvchad
+{
+  $env:NVIM_APPNAME = "nvchad"
+  nvim $args
+}
+
+# Chạy AstroNvim bằng lệnh 'astronvim'
+function astronvim
+{
+  $env:NVIM_APPNAME = "astronvim"
+  nvim $args
 }
